@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+
+import { useReducer } from 'react';
+import reducer from './reducer';
+import AddTodo from './AddTodo';
+import TodoList from './TodoList';
+import TodoStats from './TodoStats';
+import styles from  './styles/App.module.css';
 
 function App() {
+  const [todos, dispatch] = useReducer(reducer, [
+    { id: Math.random(), text: 'Do morning exercise', isCompleted: false },
+    { id: Math.random(), text: 'Read a book', isCompleted: false },
+    { id: Math.random(), text: 'Finish work project', isCompleted: false }
+  ]
+  )
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.App}>
+      <AddTodo dispatch={dispatch} />
+      <TodoList todos={todos} dispatch={dispatch} />
+      <TodoStats todos={todos} dispatch={dispatch} />
     </div>
   );
 }
